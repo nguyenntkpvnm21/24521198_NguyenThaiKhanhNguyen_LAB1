@@ -3,67 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enterprise Developer Portfolio</title>
+  <title>Developer Portfolio - Exercise 3</title>
   <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
+  <!-- Kế thừa từ Exercise 1: Skip-link bắt buộc -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <header class="navbar" role="banner">
-    <h1>Jane Doe</h1>
-    <nav role="navigation" aria-label="Main Navigation">
+  <header role="banner" class="site-header">
+    <nav role="navigation" aria-label="Primary" class="navbar">
       <ul class="nav-links">
-        <li><a href="#projects">Projects</a></li>
-        <li>
-          <button id="theme-btn" type="button" aria-pressed="false" aria-label="Toggle dark mode">
-            🌙
-          </button>
-        </li>
+        <li><a href="#hero">Giới thiệu</a></li>
+        <li><a href="#skills">Kỹ năng</a></li>
+        <li><a href="#projects">Dự án</a></li>
+        <li><a href="#contact">Liên hệ</a></li>
       </ul>
+      <!-- COMPONENT 1: THEME SWITCHER (Kế thừa Ex 2, chuẩn hóa aria-pressed) -->
+      <button 
+        type="button" 
+        id="theme-btn" 
+        class="theme-toggle" 
+        aria-pressed="false" 
+        aria-label="Chuyển đổi giao diện sáng tối"
+      >
+        <span class="theme-icon" aria-hidden="true">🌙</span>
+        <span class="theme-text">Giao diện tối</span>
+      </button>
     </nav>
   </header>
 
   <main id="main-content" role="main">
-    <section id="projects" class="portfolio-container" aria-labelledby="projects-title">
-      <h2 id="projects-title">Featured Projects</h2>
+    <!-- COMPONENT 2: HERO SECTION (Chống CLS: bắt buộc width/height cố định) -->
+    <section id="hero" class="hero-section" aria-labelledby="hero-title">
+      <img 
+        src="assets/avatar.webp" 
+        alt="Chân dung nhà phát triển phần mềm" 
+        width="160" 
+        height="160" 
+        loading="lazy" 
+        decoding="async" 
+        class="hero-avatar"
+      >
+      <div class="hero-content">
+        <h1 id="hero-title">Nguyễn Thái Khánh Nguyên</h1>
+        <p class="hero-pitch">Kỹ sư phần mềm tập trung vào chuẩn Web hiện đại, cấu trúc dữ liệu và kiến trúc hướng module.</p>
+      </div>
+    </section>
 
-      <div class="project-grid">
-        <article class="project-card">
+    <!-- COMPONENT 3: SKILLS MATRIX (Phân nhóm danh mục dạng Grid) -->
+    <section id="skills" class="skills-section" aria-labelledby="skills-title">
+      <h2 id="skills-title">Kỹ năng chuyên môn</h2>
+      <div class="skills-grid">
+        <article class="skill-category">
+          <h3>Web Frontend</h3>
+          <ul class="badge-list">
+            <li class="badge">Semantic HTML5</li>
+            <li class="badge">CSS Grid & Flexbox</li>
+            <li class="badge">Vanilla ES6+</li>
+          </ul>
+        </article>
+        <article class="skill-category">
+          <h3>Systems & Backend</h3>
+          <ul class="badge-list">
+            <li class="badge">Node.js</li>
+            <li class="badge">TypeScript</li>
+            <li class="badge">RESTful APIs</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- COMPONENT 4: PROJECT CARDS (Đúng contract mẫu trên Slide 14) -->
+    <section id="projects" class="projects-section" aria-labelledby="projects-title">
+      <div class="section-header">
+        <h2 id="projects-title">Dự án tiêu biểu</h2>
+        <!-- Nút test chuyển đổi trạng thái phục vụ Live Defense Slide 18 -->
+        <div class="state-controls" aria-label="Bộ điều khiển trạng thái mẫu">
+          <button type="button" id="btn-state-loading" class="btn-sm">Mô phỏng Loading</button>
+          <button type="button" id="btn-state-live" class="btn-sm">Dữ liệu Live</button>
+          <button type="button" id="btn-state-error" class="btn-sm">Mô phỏng Lỗi</button>
+        </div>
+      </div>
+
+      <div id="project-container" class="project-grid" aria-live="polite">
+        <!-- Khối contract gốc chính xác theo Slide 14 -->
+        <article class="project-card" data-category="frontend">
           <header class="card-header">
             <h3>Distributed State Engine</h3>
             <span class="badge">TypeScript</span>
           </header>
           <p>Lightweight event bus built without external libraries.</p>
           <footer class="card-footer">
-            <a href="#" aria-label="View Distributed State Engine source code">Source Code</a>
+            <a href="#" aria-label="View State Engine repository">Source Code</a>
           </footer>
         </article>
 
-        <article class="project-card">
+        <article class="project-card" data-category="backend">
           <header class="card-header">
-            <h3>Audio Synthesizer</h3>
-            <span class="badge">Web Audio</span>
+            <h3>Task Stream Processor</h3>
+            <span class="badge">Node.js</span>
           </header>
-          <p>Polyphonic keyboard sampler leveraging native browser APIs.</p>
+          <p>High-throughput data streaming pipeline with zero third-party framework overhead.</p>
           <footer class="card-footer">
-            <a href="#" aria-label="View Audio Synthesizer source code">Source Code</a>
-          </footer>
-        </article>
-
-        <article class="project-card">
-          <header class="card-header">
-            <h3>Telemetry Dashboard</h3>
-            <span class="badge">CSS Grid</span>
-          </header>
-          <p>Real-time analytics UI built with resilient container patterns.</p>
-          <footer class="card-footer">
-            <a href="#" aria-label="View Telemetry Dashboard source code">Source Code</a>
+            <a href="#" aria-label="View Task Stream Processor repository">Source Code</a>
           </footer>
         </article>
       </div>
     </section>
+
+    <!-- COMPONENT 5: CONTACT FORM (Native Form Validation) -->
+    <section id="contact" class="contact-section" aria-labelledby="contact-title">
+      <h2 id="contact-title">Liên hệ công việc</h2>
+      <form id="contact-form" class="contact-form" novalidate>
+        <div class="form-group">
+          <label for="contact-name">Họ và tên <span aria-hidden="true">*</span></label>
+          <input type="text" id="contact-name" name="name" required minlength="3">
+        </div>
+
+        <div class="form-group">
+          <label for="contact-email">Email liên hệ <span aria-hidden="true">*</span></label>
+          <input type="email" id="contact-email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="contact-message">Nội dung <span aria-hidden="true">*</span></label>
+          <textarea id="contact-message" name="message" rows="4" required minlength="10"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="submit-btn" class="btn-primary">Gửi thông tin</button>
+          <span id="form-status" class="form-status" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+    </section>
   </main>
 
-  <script src="app.js"></script>
+  <footer role="contentinfo" class="site-footer">
+    <p>&copy; 2026 Nguyễn Thái Khánh Nguyên. Built with Vanilla Web Standards.</p>
+  </footer>
 </body>
 </html>
