@@ -3,145 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nguyễn Thái Khánh Nguyên - Developer Portfolio</title>
+  <title>Engineering Portfolio | Resilient Architecture</title>
   <link rel="stylesheet" href="style.css">
-  <script src="app.js" defer></script>
 </head>
 <body>
-  <!-- Mandatory Skip-link for Accessibility -->
+  <!-- Accessible Skip Link -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <!-- Global Header Landmark -->
   <header role="banner" class="site-header">
-    <nav role="navigation" aria-label="Primary" class="navbar">
-      <ul class="nav-links">
-        <li><a href="#hero">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+    <div class="header-inner">
+      <div class="brand">
+        <h1 class="brand-title">Nguyen Thai Khanh Nguyen</h1>
+        <p class="brand-tagline">Software & Systems Engineer</p>
+      </div>
 
-      <!-- COMPONENT 1: THEME SWITCHER -->
+      <!-- Theme Switcher Trigger -->
       <button 
         type="button" 
         id="theme-btn" 
         class="theme-toggle" 
         aria-pressed="false" 
-        aria-label="Toggle light and dark color scheme"
-      >
+        aria-label="Toggle color theme">
         <span class="theme-icon" aria-hidden="true">🌙</span>
         <span class="theme-text">Dark Mode</span>
       </button>
-    </nav>
+    </div>
   </header>
 
+  <!-- Global Navigation Landmark -->
+  <nav role="navigation" aria-label="Primary Navigation" class="site-nav">
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#projects">Engineering Artifacts</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content Landmark -->
   <main id="main-content" role="main">
-    <!-- COMPONENT 2: HERO SECTION -->
-    <section id="hero" class="hero-section" aria-labelledby="hero-title">
-      <!-- Fallback SVG Avatar chống CLS và không bị vỡ icon -->
-      <img 
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'%3E%3Crect width='160' height='160' fill='%230284c7'/%3E%3Ccircle cx='80' cy='60' r='30' fill='%23ffffff'/%3E%3Cpath d='M30,140 C30,105 50,95 80,95 C110,95 130,105 130,140 Z' fill='%23ffffff'/%3E%3C/svg%3E" 
-        alt="Portrait of Software Engineer" 
-        width="160" 
-        height="160" 
-        loading="lazy" 
-        decoding="async" 
-        class="hero-avatar"
-      >
-      <div class="hero-content">
-        <h1 id="hero-title">Nguyễn Thái Khánh Nguyên</h1>
-        <p class="hero-pitch">Software Engineer specializing in modern Web standards, robust data structures, and modular component architectures.</p>
-      </div>
+    <!-- Hero / Overview Section -->
+    <section id="overview" class="section-container" aria-labelledby="overview-heading">
+      <h2 id="overview-heading">System Overview</h2>
+      <p class="section-lead">
+        Architecting robust, zero-CLS client applications through strict state modeling and decoupled engineering pipelines.
+      </p>
     </section>
 
-    <!-- COMPONENT 3: SKILLS MATRIX -->
-    <section id="skills" class="skills-section" aria-labelledby="skills-title">
-      <h2 id="skills-title">Technical Skills</h2>
-      <div class="skills-grid">
-        <article class="skill-category">
-          <h3>Web Frontend</h3>
-          <ul class="badge-list">
-            <li class="badge">Semantic HTML5</li>
-            <li class="badge">CSS Grid &amp; Flexbox</li>
-            <li class="badge">Vanilla ES6+</li>
-          </ul>
-        </article>
-        <article class="skill-category">
-          <h3>Systems &amp; Backend</h3>
-          <ul class="badge-list">
-            <li class="badge">Node.js</li>
-            <li class="badge">TypeScript</li>
-            <li class="badge">RESTful APIs</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <!-- COMPONENT 4: PROJECT CARDS -->
-    <section id="projects" class="projects-section" aria-labelledby="projects-title">
+    <!-- Exercise 4: Resilient Component Architecture -->
+    <section id="projects" class="section-container" aria-labelledby="projects-heading">
       <div class="section-header">
-        <h2 id="projects-title">Featured Projects</h2>
-        <div class="state-controls" aria-label="Demo state controls">
-          <button type="button" id="btn-state-loading" class="btn-sm">Simulate Loading</button>
-          <button type="button" id="btn-state-live" class="btn-sm">Live Data</button>
-          <button type="button" id="btn-state-error" class="btn-sm">Simulate Error</button>
-        </div>
+        <h2 id="projects-heading">Featured Engineering Artifacts</h2>
+        <p class="section-subtitle">Demonstrating a 4-state decoupled resilient UI component.</p>
       </div>
 
-      <div id="project-container" class="project-grid" aria-live="polite">
-        <!-- Khối Card hợp đồng mẫu từ Slide 14 -->
-        <article class="project-card" data-category="frontend">
-          <header class="card-header">
-            <h3>Distributed State Engine</h3>
-            <span class="badge">TypeScript</span>
-          </header>
-          <p>Lightweight event bus built without external libraries.</p>
-          <footer class="card-footer">
-            <a href="#" aria-label="View Distributed State Engine repository">Source Code</a>
-          </footer>
-        </article>
+      <!-- State Simulator (Interactive controls for Live Defense evaluation) -->
+      <aside class="state-simulator" aria-label="Live State Simulator">
+        <span class="simulator-label">Simulate State:</span>
+        <div class="button-group" role="group" aria-label="State controls">
+          <button type="button" class="btn-state" data-target="loading">Loading Skeleton</button>
+          <button type="button" class="btn-state" data-target="success">Live Data</button>
+          <button type="button" class="btn-state" data-target="empty">Empty State</button>
+          <button type="button" class="btn-state" data-target="error">Error State</button>
+        </div>
+      </aside>
 
-        <article class="project-card" data-category="backend">
-          <header class="card-header">
-            <h3>Task Stream Processor</h3>
-            <span class="badge">Node.js</span>
-          </header>
-          <p>High-throughput data streaming pipeline with zero third-party framework overhead.</p>
-          <footer class="card-footer">
-            <a href="#" aria-label="View Task Stream Processor repository">Source Code</a>
-          </footer>
-        </article>
+      <!-- Target Container for Dynamic Component States -->
+      <div 
+        id="projects-container" 
+        class="projects-grid" 
+        role="region" 
+        aria-label="Projects list" 
+        aria-live="polite" 
+        aria-busy="false">
+        <!-- State nodes are injected dynamically via app.js -->
       </div>
     </section>
 
-    <!-- COMPONENT 5: CONTACT FORM -->
-    <section id="contact" class="contact-section" aria-labelledby="contact-title">
-      <h2 id="contact-title">Get in Touch</h2>
-      <form id="contact-form" class="contact-form" novalidate>
+    <!-- Contact Form Section -->
+    <section id="contact" class="section-container" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Get in Touch</h2>
+      <form class="contact-form" action="#" method="POST" onsubmit="event.preventDefault();">
         <div class="form-group">
-          <label for="contact-name">Full Name <span aria-hidden="true">*</span></label>
-          <input type="text" id="contact-name" name="name" required minlength="3" placeholder="Enter your full name">
+          <label for="contact-name">Full Name</label>
+          <input type="text" id="contact-name" name="name" required placeholder="Enter your full name">
         </div>
-
         <div class="form-group">
-          <label for="contact-email">Email Address <span aria-hidden="true">*</span></label>
-          <input type="email" id="contact-email" name="email" required placeholder="name@domain.com">
+          <label for="contact-email">Institutional Email</label>
+          <input type="email" id="contact-email" name="email" required placeholder="name@institution.edu">
         </div>
-
-        <div class="form-group">
-          <label for="contact-message">Message <span aria-hidden="true">*</span></label>
-          <textarea id="contact-message" name="message" rows="4" required minlength="10" placeholder="Type your message here..."></textarea>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" id="submit-btn" class="btn-primary">Send Message</button>
-          <span id="form-status" class="form-status" role="status" aria-live="polite"></span>
-        </div>
+        <button type="submit" class="btn-submit">Dispatch Message</button>
       </form>
     </section>
   </main>
 
+  <!-- Global Footer Landmark -->
   <footer role="contentinfo" class="site-footer">
-    <p>&copy; 2026 Nguyễn Thái Khánh Nguyên. Built with Vanilla Web Standards.</p>
+    <p>&copy; 2026 Nguyen Thai Khanh Nguyen. All engineering rights reserved.</p>
   </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
