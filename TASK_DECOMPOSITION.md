@@ -7,3 +7,8 @@
   - Exactly one `<h1>` element.
   - Required landmarks: `<header>`, `<nav>`, `<main>`, `<section>`.
   - Zero `<div>` tags.
+
+  ## Exercise 2 Breakdown
+- [x] T-02A: Tokens & Reset (`feat(css): tokens & reset`)
+- [ ] T-02B: 2D Grid Layout (`feat(css): responsive grid`)
+- [ ] T-02C: Theme Engine (`feat(js): dark mode engine`)
