@@ -1,239 +1,434 @@
 /* ==========================================================================
-   1. RESET & DESIGN TOKENS
+   1. GLOBAL RESET & BASE TOKENS (Exercise 1 & 2)
    ========================================================================== */
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Biến mặc định: LIGHT THEME */
 :root {
-  --bg-primary: #ffffff;
-  --text-primary: #0f172a;
-  --text-muted: #64748b;
-  --accent: #0284c7;
-  --card-bg: #f8fafc;
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Light Theme Tokens */
+  --bg-primary: #f8fafc;
+  --bg-surface: #ffffff;
   --border-color: #cbd5e1;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --accent: #0284c7;
+  --accent-hover: #0369a1;
+  --accent-light: rgba(2, 132, 199, 0.12);
+  --error-color: #dc2626;
+  --error-bg: rgba(220, 38, 38, 0.08);
+
+  /* Shimmer tokens for light theme */
+  --shimmer-base: #e2e8f0;
+  --shimmer-highlight: #f8fafc;
 }
 
-/* Biến kích hoạt: DARK THEME */
+/* Dark Theme Tokens */
 body.dark-theme {
-  --bg-primary: #0b1329;
+  --bg-primary: #0f172a;
+  --bg-surface: #1e293b;
+  --border-color: #334155;
   --text-primary: #f8fafc;
-  --text-muted: #94a3b8;
+  --text-secondary: #94a3b8;
   --accent: #38bdf8;
-  --card-bg: #152238;
-  --border-color: #223452;
+  --accent-hover: #7dd3fc;
+  --accent-light: rgba(56, 189, 248, 0.15);
+  --error-color: #f87171;
+  --error-bg: rgba(248, 113, 113, 0.1);
+
+  /* Shimmer tokens matching Slide 18 specification */
+  --shimmer-base: #1e293b;
+  --shimmer-highlight: #334155;
+}
+
+html {
+  color-scheme: light dark;
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.6;
+  font-family: var(--font-family);
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  padding: 0 1.25rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Skip link for Accessibility */
 .skip-link {
   position: absolute;
-  top: -999px;
+  top: -100px;
   left: 1rem;
   background: var(--accent);
   color: #ffffff;
-  padding: 0.5rem 1rem;
-  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  z-index: 999;
+  border-radius: 4px;
   text-decoration: none;
   font-weight: 600;
+  transition: top 0.2s ease;
 }
+
 .skip-link:focus {
   top: 1rem;
 }
 
 /* ==========================================================================
-   2. NAVBAR & HEADER
+   2. LANDMARK CONTAINERS & NAVIGATION
    ========================================================================== */
+
 .site-header {
+  background: var(--bg-surface);
   border-bottom: 1px solid var(--border-color);
-  padding: 1.25rem 0;
+  padding: 1.5rem 2rem;
 }
 
-.navbar {
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1000px;
-  margin: 0 auto;
-  gap: 1rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.brand-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.brand-tagline {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.site-nav {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 2rem;
 }
 
 .nav-links {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   list-style: none;
   gap: 1.5rem;
 }
 
 .nav-links a {
-  color: var(--text-primary);
+  color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a:focus-visible {
   color: var(--accent);
+  text-decoration: underline;
 }
 
-.theme-toggle {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: 0.45rem 0.85rem;
-  border-radius: 6px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-/* ==========================================================================
-   3. MAIN CONTENT & COMPONENTS
-   ========================================================================== */
 main {
-  max-width: 1000px;
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
-  padding: 2.5rem 0;
+  padding: 2rem 1.5rem;
 }
 
-/* Hero Section */
-.hero-section {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-  flex-wrap: wrap;
+.section-container {
+  margin-bottom: 3.5rem;
 }
 
-.hero-avatar {
-  border-radius: 50%;
-  border: 3px solid var(--accent);
-  object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.hero-content h1 {
-  font-size: 2.2rem;
+.section-container h2 {
+  font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
-.hero-pitch {
-  color: var(--text-muted);
-  max-width: 600px;
-  font-size: 1.1rem;
+.section-lead, .section-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
 }
 
-/* Skills Matrix */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.25rem;
+/* ==========================================================================
+   3. SUB-TASK T-03A: PURE CSS SHIMMER LOADING SKELETON (Slide 18)
+   ========================================================================== */
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
-.skill-category {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 1.5rem;
-}
-
-.skill-category h3 {
-  margin-bottom: 1rem;
-}
-
-.badge-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  list-style: none;
-}
-
-/* Projects Section (Slide 14 & 17) */
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.state-controls {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.btn-sm {
-  font-size: 0.8rem;
-  padding: 0.3rem 0.65rem;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.25rem;
-}
-
-.project-card {
-  background: var(--card-bg);
+.skeleton-card {
+  background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 1rem;
+  min-height: 240px; /* Enforces CLS = 0 layout stability */
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg, 
+    var(--shimmer-base) 25%, 
+    var(--shimmer-highlight) 50%, 
+    var(--shimmer-base) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-title {
+  height: 24px;
+  width: 70%;
+}
+
+.skeleton-badge {
+  height: 20px;
+  width: 35%;
+}
+
+.skeleton-line {
+  height: 16px;
+  width: 100%;
+}
+
+.skeleton-line.short {
+  width: 65%;
+}
+
+.skeleton-link {
+  height: 18px;
+  width: 45%;
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   4. SUB-TASK T-03B: LIVE DATA STATE (Grid & Flexbox Badges)
+   ========================================================================== */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  min-height: 240px;
+}
+
+.project-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  transform: translateY(-2px);
+  border-color: var(--accent);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: 0.75rem;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
 }
 
 .badge {
-  background: var(--accent);
-  color: #ffffff;
-  padding: 0.25rem 0.65rem;
-  border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 600;
-  white-space: nowrap;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 
-.card-footer a {
+.card-body {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.card-footer {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.project-link {
   color: var(--accent);
   text-decoration: none;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
-/* Contact Form */
+.project-link:hover,
+.project-link:focus-visible {
+  text-decoration: underline;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   5. SUB-TASK T-03C: EMPTY & ERROR FEEDBACK CARDS
+   ========================================================================== */
+
+.state-feedback-card {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: var(--bg-surface);
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.state-feedback-card.error-card {
+  border-color: var(--error-color);
+  background: var(--error-bg);
+}
+
+.state-icon {
+  font-size: 2.2rem;
+}
+
+.state-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.state-message {
+  color: var(--text-secondary);
+  max-width: 500px;
+  font-size: 0.95rem;
+}
+
+.btn-retry {
+  padding: 0.6rem 1.4rem;
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-retry:hover {
+  background: var(--accent-hover);
+}
+
+.btn-retry:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* State Simulator Bar */
+.state-simulator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.simulator-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-state {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-state:hover,
+.btn-state:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Form Styles */
 .contact-form {
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  max-width: 600px;
-  margin-top: 1.25rem;
 }
 
 .form-group {
@@ -243,113 +438,39 @@ main {
 }
 
 .form-group label {
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.form-group input,
-.form-group textarea {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: 0.7rem 0.85rem;
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 0.95rem;
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: #ffffff;
-  border: none;
-  padding: 0.75rem 1.75rem;
-  border-radius: 6px;
-  cursor: pointer;
   font-weight: 600;
-  font-size: 1rem;
-  width: fit-content;
-}
-
-.form-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.form-status {
   font-size: 0.9rem;
-  font-weight: 500;
 }
 
-/* ==========================================================================
-   4. RESILIENT STATES (Slide 18)
-   ========================================================================== */
-.skeleton-card {
-  background: var(--card-bg);
+.form-group input {
+  padding: 0.65rem 0.85rem;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  border-radius: 6px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 1rem;
 }
 
-.skeleton-shimmer {
-  background: linear-gradient(90deg, #94a3b833 25%, #94a3b866 50%, #94a3b833 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 4px;
+.form-group input:focus-visible {
+  outline: 2px solid var(--accent);
 }
 
-.skeleton-title {
-  height: 24px;
-  width: 60%;
-}
-
-.skeleton-badge {
-  height: 20px;
-  width: 25%;
-}
-
-.skeleton-desc {
-  height: 48px;
-  width: 100%;
-}
-
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.state-box {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 3rem 1.5rem;
-  border: 1px dashed var(--border-color);
-  border-radius: 8px;
-  background: var(--card-bg);
-}
-
-.state-box.error {
-  border-color: #ef4444;
-  color: #ef4444;
-}
-
-.retry-btn {
-  margin-top: 1rem;
-  padding: 0.5rem 1.25rem;
+.btn-submit {
+  padding: 0.75rem 1.5rem;
   background: var(--accent);
   color: #ffffff;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 6px;
   font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
 }
 
 .site-footer {
-  border-top: 1px solid var(--border-color);
-  padding: 2rem 0;
   text-align: center;
-  color: var(--text-muted);
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-surface);
   font-size: 0.9rem;
+  color: var(--text-secondary);
 }
