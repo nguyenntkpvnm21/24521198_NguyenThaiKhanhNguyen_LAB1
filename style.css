@@ -1,80 +1,82 @@
-/* 1. Global Box-Sizing Reset */
-*,
-*::before,
-*::after {
+/* ==========================================================================
+   1. KẾ THỪA TỪ EXERCISE 2: Tokens, Reset & Theme Variables
+   ========================================================================== */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* 2. Contract Tokens - Light Theme (Default) */
 :root {
-  --bg-primary: #f8fafc;
-  --bg-surface: #ffffff;
+  --bg-primary: #ffffff;
   --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --border-color: #cbd5e1;
+  --text-muted: #64748b;
   --accent: #0284c7;
-  --focus-outline: #0284c7;
+  --card-bg: #f8fafc;
+  --border-color: #e2e8f0;
 }
 
-/* 3. Contract Tokens - Dark Theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #0f172a;
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent: #38bdf8;
+    --card-bg: #1e293b;
+    --border-color: #334155;
+  }
+}
+
 body.dark-theme {
   --bg-primary: #0f172a;
-  --bg-surface: #1e293b;
   --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --border-color: #334155;
+  --text-muted: #94a3b8;
   --accent: #38bdf8;
-  --focus-outline: #38bdf8;
+  --card-bg: #1e293b;
+  --border-color: #334155;
 }
 
-/* 4. Base Typography & Background Transition */
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  transition: background-color 0.25s ease, color 0.25s ease;
+  padding: 0 1rem;
 }
 
-/* 5. A11y Focus Rings (WCAG 2.2 AA) */
-:focus-visible {
-  outline: 2px solid var(--focus-outline);
-  outline-offset: 3px;
-}
-
-/* Skip Link A11y */
 .skip-link {
   position: absolute;
-  top: -40px;
-  left: 0;
+  top: -999px;
+  left: 1rem;
   background: var(--accent);
-  color: var(--bg-surface);
-  padding: 8px 16px;
+  color: #fff;
+  padding: 0.5rem 1rem;
   z-index: 100;
   text-decoration: none;
-  font-weight: 600;
 }
-
 .skip-link:focus {
-  top: 0;
+  top: 1rem;
 }
 
-/* Flexbox Navigation Header (1D Layout) */
+/* ==========================================================================
+   2. EXERCISE 3: Layouts & Component Styling (Slide 14 & 16)
+   ========================================================================== */
+.site-header {
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 0;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  background-color: var(--bg-surface);
-  border-bottom: 1px solid var(--border-color);
-  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 1rem;
 }
 
 .nav-links {
   display: flex;
-  align-items: center;
   list-style: none;
   gap: 1.25rem;
 }
@@ -85,44 +87,103 @@ body {
   font-weight: 500;
 }
 
-#theme-btn {
+.theme-toggle {
   background: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-primary);
-  padding: 0.5rem 0.75rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* Container & 2D Grid Layout */
-.portfolio-container {
-  max-width: 1200px;
+main {
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem 0;
 }
 
-.portfolio-container h2 {
-  margin-bottom: 1.5rem;
+/* Hero Component */
+.hero-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-avatar {
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  object-fit: cover;
+}
+
+/* Skills Matrix Component */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.skill-category {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin-top: 0.75rem;
+}
+
+/* Project Card Contract (Slide 14 & 17) */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.state-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-sm {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   color: var(--text-primary);
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-/* Responsive Grid: Tự động co giãn cột không cần media query */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
+  margin-top: 1rem;
 }
 
-/* Card Components */
 .project-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: var(--bg-surface);
+  background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   gap: 1rem;
 }
 
@@ -130,32 +191,124 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 0.75rem;
-}
-
-.card-header h3 {
-  font-size: 1.15rem;
-  color: var(--text-primary);
+  gap: 0.5rem;
 }
 
 .badge {
+  background: var(--accent);
+  color: #ffffff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
   font-size: 0.75rem;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  background-color: var(--bg-primary);
-  color: var(--accent);
-  border: 1px solid var(--border-color);
+  font-weight: 600;
   white-space: nowrap;
 }
 
-.project-card p {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-}
-
 .card-footer a {
-  display: inline-block;
   color: var(--accent);
   text-decoration: none;
+  font-weight: 500;
+}
+
+/* Contact Form Component */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 600px;
+  margin-top: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group input,
+.form-group textarea {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
   font-weight: 600;
+  width: fit-content;
+}
+
+/* ==========================================================================
+   3. TASK T-03A: Pure CSS Shimmer Skeleton (Slide 18)
+   ========================================================================== */
+.skeleton-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-title {
+  height: 24px;
+  width: 60%;
+}
+
+.skeleton-badge {
+  height: 20px;
+  width: 25%;
+}
+
+.skeleton-desc {
+  height: 48px;
+  width: 100%;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ==========================================================================
+   4. TASK T-03C: Empty & Error State Views (Slide 18)
+   ========================================================================== */
+.state-box {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  background: var(--card-bg);
+}
+
+.state-box.error {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.retry-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1.25rem;
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
