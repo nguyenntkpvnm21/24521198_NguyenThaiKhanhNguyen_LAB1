@@ -1,25 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. THEME ENGINE (Kế thừa từ Exercise 2, đồng bộ aria-pressed)
+  // 1. THEME ENGINE: Đảm bảo chuyển đổi dứt khoát Light <-> Dark
   const themeToggle = document.querySelector('#theme-btn');
+  const themeIcon = themeToggle ? themeToggle.querySelector('.theme-icon') : null;
+  const themeText = themeToggle ? themeToggle.querySelector('.theme-text') : null;
+
+  function updateThemeUI(isDark) {
+    if (isDark) {
+      document.body.classList.add('dark-theme');
+      if (themeToggle) themeToggle.setAttribute('aria-pressed', 'true');
+      if (themeIcon) themeIcon.textContent = '☀️';
+      if (themeText) themeText.textContent = 'Light Mode';
+    } else {
+      document.body.classList.remove('dark-theme');
+      if (themeToggle) themeToggle.setAttribute('aria-pressed', 'false');
+      if (themeIcon) themeIcon.textContent = '🌙';
+      if (themeText) themeText.textContent = 'Dark Mode';
+    }
+  }
+
   if (themeToggle) {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Ưu tiên trạng thái đã lưu, nếu chưa lưu thì lấy theo hệ thống
     const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-
-    if (isDark) {
-      document.body.classList.add('dark-theme');
-      themeToggle.setAttribute('aria-pressed', 'true');
-    }
+    updateThemeUI(isDark);
 
     themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-theme');
-      const activeDark = document.body.classList.contains('dark-theme');
-      themeToggle.setAttribute('aria-pressed', String(activeDark));
-      localStorage.setItem('theme', activeDark ? 'dark' : 'light');
+      const currentlyDark = document.body.classList.contains('dark-theme');
+      const nextDark = !currentlyDark;
+      updateThemeUI(nextDark);
+      localStorage.setItem('theme', nextDark ? 'dark' : 'light');
     });
   }
 
-  // 2. CONTACT FORM STATE MACHINE (Idle -> Submitting -> Success/Error)
+  // 2. CONTACT FORM: State Machine tiếng Anh (Slide 14)
   const contactForm = document.querySelector('#contact-form');
   const formStatus = document.querySelector('#form-status');
   const submitBtn = document.querySelector('#submit-btn');
@@ -29,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault();
 
       if (!contactForm.checkValidity()) {
-        formStatus.textContent = 'Vui lòng kiểm tra lại các trường bắt buộc.';
+        formStatus.textContent = 'Please fill out all required fields correctly.';
         formStatus.style.color = '#ef4444';
         contactForm.reportValidity();
         return;
@@ -37,21 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Trạng thái Submitting
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Đang gửi...';
+      submitBtn.textContent = 'Sending...';
       formStatus.textContent = '';
 
-      // Giả lập gửi không tải lại trang
       setTimeout(() => {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Gửi thông tin';
-        formStatus.textContent = 'Đã gửi thông tin liên hệ thành công!';
+        submitBtn.textContent = 'Send Message';
+        formStatus.textContent = 'Thank you! Your message has been sent successfully.';
         formStatus.style.color = '#10b981';
         contactForm.reset();
       }, 1000);
     });
   }
 
-  // 3. 4-STATE RESILIENT COMPONENT HANDLER (Slide 18)
+  // 3. RESILIENT 4-STATE COMPONENT ARCHITECTURE (Slide 18)
   const projectContainer = document.querySelector('#project-container');
   const mockProjects = [
     {
@@ -70,10 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  // Trạng thái 1: T-03A Loading Skeleton
+  // Trạng thái T-03A: Loading Skeleton
   function renderSkeletonState() {
     projectContainer.replaceChildren();
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
       const card = document.createElement('article');
       card.className = 'skeleton-card';
 
@@ -91,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Trạng thái 2: T-03B Live Data State (DOM API an toàn, chống XSS)
+  // Trạng thái T-03B: Live Data
   function renderLiveState(projects) {
     projectContainer.replaceChildren();
 
@@ -125,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const a = document.createElement('a');
       a.href = proj.link;
-      a.setAttribute('aria-label', `Xem mã nguồn ${proj.title}`);
+      a.setAttribute('aria-label', `View ${proj.title} repository`);
       a.textContent = 'Source Code';
 
       footer.appendChild(a);
@@ -134,18 +147,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Trạng thái 3: T-03C Empty State
+  // Trạng thái T-03C: Empty State
   function renderEmptyState() {
     projectContainer.replaceChildren();
     const emptyBox = document.createElement('div');
     emptyBox.className = 'state-box';
     const message = document.createElement('p');
-    message.textContent = 'Hiện chưa có dự án nào được công bố.';
+    message.textContent = 'No published projects are currently available.';
     emptyBox.appendChild(message);
     projectContainer.appendChild(emptyBox);
   }
 
-  // Trạng thái 4: T-03C Error State có retry trigger
+  // Trạng thái T-03C: Error State
   function renderErrorState(errorMessage, onRetry) {
     projectContainer.replaceChildren();
     const errorBox = document.createElement('div');
@@ -157,14 +170,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const retryBtn = document.createElement('button');
     retryBtn.type = 'button';
     retryBtn.className = 'retry-btn';
-    retryBtn.textContent = 'Thử lại';
+    retryBtn.textContent = 'Retry';
     retryBtn.addEventListener('click', onRetry);
 
     errorBox.append(message, retryBtn);
     projectContainer.appendChild(errorBox);
   }
 
-  // Bắt sự kiện 3 nút chuyển trạng thái để test trực tiếp
+  // Gán sự kiện cho các nút điều khiển Demo
   const btnLoading = document.querySelector('#btn-state-loading');
   const btnLive = document.querySelector('#btn-state-live');
   const btnError = document.querySelector('#btn-state-error');
@@ -173,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnLive) btnLive.addEventListener('click', () => renderLiveState(mockProjects));
   if (btnError) {
     btnError.addEventListener('click', () => {
-      renderErrorState('Không thể kết nối đến máy chủ dữ liệu.', () => {
+      renderErrorState('Failed to fetch repository data from remote server.', () => {
         renderLiveState(mockProjects);
       });
     });
