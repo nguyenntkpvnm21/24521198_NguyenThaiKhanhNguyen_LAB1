@@ -17,11 +17,12 @@
   --border-color: #cbd5e1;
   --text-primary: #0f172a;
   --text-secondary: #475569;
-  --accent: #0284c7;
+  --accent: #0369a1;
   --accent-hover: #0369a1;
   --accent-light: rgba(2, 132, 199, 0.12);
   --error-color: #dc2626;
   --error-bg: rgba(220, 38, 38, 0.08);
+  --on-accent: #ffffff;
 
   /* Shimmer tokens for light theme */
   --shimmer-base: #e2e8f0;
@@ -40,6 +41,7 @@ body.dark-theme {
   --accent-light: rgba(56, 189, 248, 0.15);
   --error-color: #f87171;
   --error-bg: rgba(248, 113, 113, 0.1);
+  --on-accent: #0f172a;
 
   /* Shimmer tokens matching Slide 18 specification */
   --shimmer-base: #1e293b;
@@ -66,7 +68,7 @@ body {
   top: -100px;
   left: 1rem;
   background: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
   padding: 0.75rem 1.25rem;
   z-index: 999;
   border-radius: 4px;
@@ -365,7 +367,7 @@ main {
 .btn-retry {
   padding: 0.6rem 1.4rem;
   background: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
   border: none;
   border-radius: 6px;
   font-weight: 600;
@@ -458,7 +460,7 @@ main {
 .btn-submit {
   padding: 0.75rem 1.5rem;
   background: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
   border: none;
   border-radius: 6px;
   font-weight: 600;

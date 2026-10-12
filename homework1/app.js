@@ -179,7 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
     retryBtn.type = 'button';
     retryBtn.className = 'btn-retry';
     retryBtn.textContent = 'Retry Request';
-    retryBtn.addEventListener('click', retryCallback);
+    retryBtn.addEventListener('click', () => {
+  retryCallback();
+  document.querySelector(
+    '.btn-state[data-target="success"]'
+  )?.focus();
+});
 
     wrapper.append(icon, title, message, retryBtn);
     return wrapper;
