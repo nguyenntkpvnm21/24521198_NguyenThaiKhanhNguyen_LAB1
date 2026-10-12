@@ -56,3 +56,55 @@ header {
   outline: 3px solid var(--text-color);
   outline-offset: 4px;
 }
+
+
+/* Beat Recorder */
+
+.recorder {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+.recorder h2 {
+  margin-bottom: 1rem;
+}
+
+#recorder-status {
+  margin-bottom: 1.5rem;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.recorder-controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.recorder-controls button {
+  padding: 0.8rem 1.2rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 8px;
+  background: var(--pad-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.recorder-controls button:hover:not(:disabled) {
+  background: var(--accent-color);
+  color: var(--bg-color);
+}
+
+.recorder-controls button:focus-visible {
+  outline: 3px solid var(--text-color);
+  outline-offset: 3px;
+}
+
+.recorder-controls button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

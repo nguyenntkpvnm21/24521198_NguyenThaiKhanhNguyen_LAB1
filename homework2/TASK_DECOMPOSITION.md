@@ -52,17 +52,17 @@
   - Preserve event order and timing during replay.
   - Avoid recording replayed events.
 - **Verification:**
-  - Drum events are recorded in order.
-  - Replay reproduces the original sequence and timing.
-  - Clear removes all recorded events.
+  - [x] Drum events are recorded in order.
+  - [x] Replay reproduces the original sequence and timing.
+  - [x] Clear removes all recorded events.
 - **Commit:** `feat(hw2): implement FIFO beat recorder`
 
 ## Final Quality Assurance
-- [ ] All drum pads work correctly.
-- [ ] Polyphonic playback works.
-- [ ] Keyboard controls ignore repeated keydown events.
-- [ ] FIFO recording and replay work correctly.
-- [ ] No JavaScript console errors.
-- [ ] No unauthorized external libraries.
-- [ ] Keyboard accessibility verified.
-- [ ] Homework 1 remains unchanged.
+- [x] All drum pads work correctly.
+- [x] Polyphonic playback works.
+- [x] Keyboard controls ignore repeated keydown events.
+- [x] FIFO recording and replay work correctly.
+- [x] No JavaScript console errors.
+- [x] No unauthorized external libraries.
+- [x] Keyboard accessibility verified.
+- [x] Homework 1 remains unchanged.
