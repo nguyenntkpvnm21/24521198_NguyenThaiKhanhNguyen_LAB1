@@ -255,6 +255,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Contact form: prevent default submission
+  const contactForm = document.querySelector('.contact-form');
+
+  contactForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+  });
+
   // Initial boot: start with Live Data state
   fetchStateWithDelay('success');
 });

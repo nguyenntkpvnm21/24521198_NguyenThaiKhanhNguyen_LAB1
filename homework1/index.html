@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+>
+
   <title>Engineering Portfolio | Resilient Architecture</title>
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -83,7 +90,7 @@
     <!-- Contact Form Section -->
     <section id="contact" class="section-container" aria-labelledby="contact-heading">
       <h2 id="contact-heading">Get in Touch</h2>
-      <form class="contact-form" action="#" method="POST" onsubmit="event.preventDefault();">
+      <form class="contact-form" action="#" method="POST">
         <div class="form-group">
           <label for="contact-name">Full Name</label>
           <input type="text" id="contact-name" name="name" required placeholder="Enter your full name">
