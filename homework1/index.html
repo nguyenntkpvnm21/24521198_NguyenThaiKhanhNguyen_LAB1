@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Portfolio | Resilient Architecture</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Global Header Landmark -->
+  <header role="banner" class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <h1 class="brand-title">Nguyen Thai Khanh Nguyen</h1>
+        <p class="brand-tagline">Software & Systems Engineer</p>
+      </div>
+
+      <!-- Theme Switcher Trigger -->
+      <button 
+        type="button" 
+        id="theme-btn" 
+        class="theme-toggle" 
+        aria-pressed="false" 
+        aria-label="Toggle color theme">
+        <span class="theme-icon" aria-hidden="true">🌙</span>
+        <span class="theme-text">Dark Mode</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Global Navigation Landmark -->
+  <nav role="navigation" aria-label="Primary Navigation" class="site-nav">
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#projects">Engineering Artifacts</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content Landmark -->
+  <main id="main-content" role="main">
+    <!-- Hero / Overview Section -->
+    <section id="overview" class="section-container" aria-labelledby="overview-heading">
+      <h2 id="overview-heading">System Overview</h2>
+      <p class="section-lead">
+        Architecting robust, zero-CLS client applications through strict state modeling and decoupled engineering pipelines.
+      </p>
+    </section>
+
+    <!-- Exercise 4: Resilient Component Architecture -->
+    <section id="projects" class="section-container" aria-labelledby="projects-heading">
+      <div class="section-header">
+        <h2 id="projects-heading">Featured Engineering Artifacts</h2>
+        <p class="section-subtitle">Demonstrating a 4-state decoupled resilient UI component.</p>
+      </div>
+
+      <!-- State Simulator (Interactive controls for Live Defense evaluation) -->
+      <aside class="state-simulator" aria-label="Live State Simulator">
+        <span class="simulator-label">Simulate State:</span>
+        <div class="button-group" role="group" aria-label="State controls">
+          <button type="button" class="btn-state" data-target="loading">Loading Skeleton</button>
+          <button type="button" class="btn-state" data-target="success">Live Data</button>
+          <button type="button" class="btn-state" data-target="empty">Empty State</button>
+          <button type="button" class="btn-state" data-target="error">Error State</button>
+        </div>
+      </aside>
+
+      <!-- Target Container for Dynamic Component States -->
+      <div 
+        id="projects-container" 
+        class="projects-grid" 
+        role="region" 
+        aria-label="Projects list" 
+        aria-live="polite" 
+        aria-busy="false">
+        <!-- State nodes are injected dynamically via app.js -->
+      </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="section-container" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Get in Touch</h2>
+      <form class="contact-form" action="#" method="POST" onsubmit="event.preventDefault();">
+        <div class="form-group">
+          <label for="contact-name">Full Name</label>
+          <input type="text" id="contact-name" name="name" required placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label for="contact-email">Institutional Email</label>
+          <input type="email" id="contact-email" name="email" required placeholder="name@institution.edu">
+        </div>
+        <button type="submit" class="btn-submit">Dispatch Message</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Global Footer Landmark -->
+  <footer role="contentinfo" class="site-footer">
+    <p>&copy; 2026 Nguyen Thai Khanh Nguyen. All engineering rights reserved.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
