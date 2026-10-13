@@ -94,15 +94,21 @@ function initializeRegistrationForm() {
 
   let currentState = FORM_STATE.IDLE;
 
-  function renderState(message = "") {
-    status.dataset.state = currentState;
-    status.textContent = message;
+  
+function renderState(message = "") {
+  const isSubmitting = currentState === FORM_STATE.SUBMITTING;
 
-    submitButton.textContent =
-      currentState === FORM_STATE.SUBMITTING
-        ? "Submitting..."
-        : "Register";
-  }
+  status.dataset.state = currentState;
+  status.textContent = message;
+
+  submitButton.disabled = isSubmitting;
+  submitButton.setAttribute("aria-disabled", String(isSubmitting));
+
+  submitButton.textContent = isSubmitting
+    ? "Submitting..."
+    : "Register";
+}
+
 
   function transitionTo(nextState, message = "") {
     const validTransitions = {
@@ -133,12 +139,32 @@ function initializeRegistrationForm() {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
+    if (currentState === FORM_STATE.SUBMITTING) {
+    return;
+  }
 
-    transitionTo(FORM_STATE.SUBMITTING, "Submitting registration...");
+    
+const nameInput = form.elements.namedItem("fullName");
+const emailInput = form.elements.namedItem("email");
+
+if (!(nameInput instanceof HTMLInputElement) ||
+    !(emailInput instanceof HTMLInputElement)) {
+  status.dataset.state = FORM_STATE.ERROR;
+  status.textContent = "Form configuration error.";
+  return;
+}
+
+// Normalize user input before validation.
+nameInput.value = nameInput.value.trim();
+emailInput.value = emailInput.value.trim();
+
+if (!form.checkValidity()) {
+  form.reportValidity();
+  return;
+}
+
+transitionTo(FORM_STATE.SUBMITTING, "Submitting registration...");
+
 
     try {
       const result = await simulateRegistration();
