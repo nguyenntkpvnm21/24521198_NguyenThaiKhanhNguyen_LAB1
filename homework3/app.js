@@ -72,3 +72,94 @@ function initializeCountdown() {
 }
 
 initializeCountdown();
+
+
+/* HW3-04: Registration Form State Machine */
+
+const FORM_STATE = Object.freeze({
+  IDLE: "idle",
+  SUBMITTING: "submitting",
+  SUCCESS: "success",
+  ERROR: "error"
+});
+
+function initializeRegistrationForm() {
+  const form = document.querySelector("#registration-form");
+  const submitButton = document.querySelector("#submit-button");
+  const status = document.querySelector("#form-status");
+
+  if (!form || !submitButton || !status) {
+    return;
+  }
+
+  let currentState = FORM_STATE.IDLE;
+
+  function renderState(message = "") {
+    status.dataset.state = currentState;
+    status.textContent = message;
+
+    submitButton.textContent =
+      currentState === FORM_STATE.SUBMITTING
+        ? "Submitting..."
+        : "Register";
+  }
+
+  function transitionTo(nextState, message = "") {
+    const validTransitions = {
+      [FORM_STATE.IDLE]: [FORM_STATE.SUBMITTING],
+      [FORM_STATE.SUBMITTING]: [
+        FORM_STATE.SUCCESS,
+        FORM_STATE.ERROR
+      ],
+      [FORM_STATE.SUCCESS]: [FORM_STATE.SUBMITTING],
+      [FORM_STATE.ERROR]: [FORM_STATE.SUBMITTING]
+    };
+
+    if (!validTransitions[currentState].includes(nextState)) {
+      return false;
+    }
+
+    currentState = nextState;
+    renderState(message);
+    return true;
+  }
+
+  async function simulateRegistration() {
+  // Temporary mock: no backend request is sent.
+  await new Promise((resolve) => setTimeout(resolve, 1200));
+  return { ok: true };
+}
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    transitionTo(FORM_STATE.SUBMITTING, "Submitting registration...");
+
+    try {
+      const result = await simulateRegistration();
+
+      if (!result.ok) {
+        throw new Error("Registration failed");
+      }
+
+      transitionTo(
+        FORM_STATE.SUCCESS,
+        "Registration simulated successfully. No data was saved."
+      );
+    } catch {
+      transitionTo(
+        FORM_STATE.ERROR,
+        "Unable to submit registration. Please try again."
+      );
+    }
+  });
+
+  renderState();
+}
+
+initializeRegistrationForm();
